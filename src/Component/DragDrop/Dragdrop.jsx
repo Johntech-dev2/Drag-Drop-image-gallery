@@ -69,10 +69,10 @@ function Dragdrop() {
     
    }
   return ( 
-    < div className=''>
+    < div className='bg-black max-h-screen min-h-screen'>
       
           <input
-        className='items-center mt-3 mb-3 flex bg-transparent px-2 py-2 font-semibold text-purple-600 rounded-xl border-none w-[350px] ring-2 ring-gray-300 focus:ring-2 focus:ring-gray-500 mx-auto'
+        className='items-center mt-3  flex bg-transparent px-2 py-2 font-semibold text-purple-600 rounded-xl border-none w-[350px] ring-2 ring-gray-300 focus:ring-2 focus:ring-gray-500 mx-auto'
         type='text'
         placeholder='Search by image name'
         value={searchQuery}
