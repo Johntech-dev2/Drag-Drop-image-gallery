@@ -17,7 +17,7 @@ function Login() {
         .then((userCredential) => {
           // Handle successful login
           alert('User logged in:', userCredential.user);
-          history.push('/Dragdrop')
+          navigate('/Dragdrop')
         })
         .catch((error) => {
           // Handle login error
