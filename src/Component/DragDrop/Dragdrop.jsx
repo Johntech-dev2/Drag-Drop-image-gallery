@@ -1,14 +1,26 @@
 import React, { useState, useRef } from 'react';
 import './Drag.css';
 
+
+
 function Dragdrop() {
   const [images, setImages] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
-
+  const [searchQuery, setSearchQuery] = useState('');
   function selectFiles() {
     fileInputRef.current.click();
   }
+
+//   function openImageModal(image) {
+//     setSelectedImage(image);
+//     setModalOpen(true);
+//   }
+
+//   function closeImageModal() {
+//     setSelectedImage(null);
+//     setModalOpen(false);
+//   }
 
   function onFileSelect(event) {
     const files = event.target.files;
@@ -26,9 +38,9 @@ function Dragdrop() {
       }
     }
   }
-   function deleteImage(index){
-      setImages((prevImages) => prevImages.filter((_, i) => i !== index));
-   }
+  //  function deleteImage(index){
+  //     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  //  }
    function onDragOver(event) {
       event.preventDefault();
       setIsDragging(true);
@@ -56,20 +68,30 @@ function Dragdrop() {
       }
     
    }
-  return (
-    <div className='p-1 overflow-hidden shadow-[0,0,5px #ffdfdf] text-center bg-black h-screen'>
-      <div className='text-center font-bold text-purple-300 text-[30px]'>
+  return ( 
+    < div className=''>
+      
+          <input
+        className='items-center mt-3 mb-3 flex bg-transparent px-2 py-2 font-semibold text-purple-600 rounded-xl border-none w-[350px] ring-2 ring-gray-300 focus:ring-2 focus:ring-gray-500 mx-auto'
+        type='text'
+        placeholder='Search by image name'
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        />
+       
+     
+    <div className='p-1 text-center pb-6'>
+      <div className='text-center font-bold text-purple-600 text-[30px]'>
         <p>Drag & Drop Image Uploading</p>
       </div>
-     
-      <div className='h-[350px] w-[80%] rounded-[5px] border-[2px] border-dashed border-purple-600 text-purple-500 flex justify-center mt-10 mx-auto mb-10 items-center ' onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
+      <div className='h-[150px] w-[300px] mx-auto rounded-xl border-[2px] border-dashed border-purple-600 text-purple-500 flex justify-center mt-3  items-center' onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
         {isDragging ? (
-          <span className='text-white'>Drop Images here</span>
+          <span className='justify-center'>Drop Images here</span>
         ) : (
           <>
-            Drag & Drop images here or {" "}
+            {"  Drag & Drop images here or   "} {"         "}
             <span role='button' onClick={selectFiles}>
-              Browse
+               Browse
             </span>
           </>
         )}
@@ -82,22 +104,36 @@ function Dragdrop() {
           className='display'
         />
       </div>
-      <div className='container'>
-        {images.map((image, index) => (
-          <div className='image' key={index}>
-            <span className='delete' onClick={() => deleteImage(index)}>&times;</span>
-            <img src={image.url} alt={image.name} />
-          </div>
-        ))}
-      </div>
       <button
         type='button' 
-        className='border p-[10px] w-[50%] cursor-pointer bg-purple-300 text-white '
+        className='border p-[10px] cursor-pointer bg-purple-400 text-white mt-[20px] w-[40%]'
       >
         Upload
       </button>
+      
+    
     </div>
+    
+      <section className='grid grid-cols-2 ml-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 max-h-24 max-w-24 min-h-0 justify-between items-center gap-6'>
+         
+         {images
+          .filter((image) =>
+            image.name.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+        .map((image, index) => (
+          <div className=' w-28 flex flex-col rounded-lg ' key={index}>
+          <img className='w-28 rounded-xl'
+          src={image.url} alt={image.name} /> 
+          <p className='text-purple-600'>{image.name} </p>
+          </div>
+          ))}
+        
+         
+      </section>
+      </div>
   );
 }
+
+
 
 export default Dragdrop;
